@@ -8,8 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=udpxy
-PKG_VERSION:=1.0-25.1
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/pcherenkov/udpxy

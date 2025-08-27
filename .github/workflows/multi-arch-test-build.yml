@@ -123,7 +123,7 @@ jobs:
 
       #- name: Store packages
       #  if: always()
-      #  uses: actions/upload-artifact@v4
+      #  uses: actions/upload-artifact@v5
       #  with:
        #   name: ${{env.ARCHIVE_NAME}}-pkgs
        #   path: |
@@ -132,9 +132,9 @@ jobs:
        #     *.ipk
        #     PKG-INFO
       - name: release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: $PACKAGES_$PRNUMBER
+          tag_name: ${{env.ARCHIVE_NAME}}
           prerelease: false
           draft: false
           generat_release_notes: false
@@ -149,7 +149,7 @@ jobs:
         
       - name: Store logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{env.ARCHIVE_NAME}}-logs
           path: |

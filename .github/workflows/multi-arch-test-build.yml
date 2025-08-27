@@ -92,7 +92,7 @@ jobs:
           echo "HEAD_ID=$(git rev-parse --short HEAD^2)" >> $GITHUB_ENV
           PRNUMBER=${GITHUB_REF_NAME%/merge}
           echo "PRNUMBER=$PRNUMBER" >> $GITHUB_ENV
-          echo "ARCHIVE_NAME=${{matrix.arch}}-PR$PRNUMBER-$MERGE_ID" >> $GITHUB_ENV
+          echo "ARCHIVE_NAME=${{matrix.arch}}-$PRNUMBER-$MERGE_ID" >> $GITHUB_ENV
 
       - name: Generate metadata
         if: always()
@@ -121,17 +121,27 @@ jobs:
           ls -al *.ipk >> PKG-INFO || true
           cat PKG-INFO
 
-      - name: Store packages
-        if: always()
-        uses: actions/upload-artifact@v4
+      #- name: Store packages
+      #  if: always()
+      #  uses: actions/upload-artifact@v4
+      #  with:
+       #   name: ${{env.ARCHIVE_NAME}}-pkgs
+       #   path: |
+       #     Packages
+       #     Packages.*
+       #     *.ipk
+       #     PKG-INFO
+      - name: release
+        uses: softprops/action-gh-release@v1
         with:
-          name: ${{env.ARCHIVE_NAME}}-packages
-          path: |
+          files: |
             Packages
             Packages.*
             *.ipk
             PKG-INFO
-
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        
       - name: Store logs
         if: always()
         uses: actions/upload-artifact@v4

@@ -122,28 +122,28 @@ jobs:
           cat PKG-INFO
 
       - name: zip packages
+        #run: zip -r -x ${{env.ARCHIVE_NAME}}-pkgs.zip . -x "*.ipk"
         uses: montudor/action-zip@v1
         with:
-          args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x |
-            *.ipk
+          args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x "*.ipk"
+          
       - name: upload packages
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.ARCHIVE_NAME}}-pkgs
-          path: |
-            ${{env.ARCHIVE_NAME}}-pkgs.zip 
+          path: ${{env.ARCHIVE_NAME}}-pkgs.zip 
             
       - name: release
         uses: softprops/action-gh-release@v2
-        if: github.ref_type == 'tag'
+        #if: github.ref_type == 'tag'
         with:
           tag_name: ${{github.ref_name}}_${{env.ARCHIVE_NAME}}
           prerelease: false
           draft: false
           generat_release_notes: false
           #name: ${{needs.changelog.output.tag}}
-          files: |
+          files: 
             ${{env.ARCHIVE_NAME}}-pkgs.zip
             Packages
             Packages.*

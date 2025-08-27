@@ -122,7 +122,7 @@ jobs:
           cat PKG-INFO
 
       - name: zip packages
-        run: zip -r -x  -n "*.ipk"
+        run: zip -r -n "*.ipk"
         #uses: montudor/action-zip@v1
         #with:
         #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x "*exclude"
@@ -138,7 +138,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         #if: github.ref_type == 'tag'
         with:
-          tag_name: ${{github.ref_name}}_${{env.ARCHIVE_NAME}}
+          tag_name: ${{env.ARCHIVE_NAME}}
           prerelease: false
           draft: false
           generat_release_notes: false

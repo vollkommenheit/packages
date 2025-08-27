@@ -122,10 +122,10 @@ jobs:
           cat PKG-INFO
 
       - name: zip packages
-        run: zip -r -x ${{env.ARCHIVE_NAME}}-pkgs.zip . -x "*.ipk"
+        run: zip -r -x  -n "*.ipk"
         #uses: montudor/action-zip@v1
         #with:
-        #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x "*.ipk"
+        #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x "*exclude"
           
       - name: upload packages
         if: always()

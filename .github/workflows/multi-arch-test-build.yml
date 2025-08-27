@@ -122,7 +122,8 @@ jobs:
           cat PKG-INFO
 
       - name: zip packages
-        run: zip -r ${{env.ARCHIVE_NAME}}-pkgs.zip -n *.ipk
+        run: |
+          zip -r ${{env.ARCHIVE_NAME}}-pkgs.zip -n *.ipk
         #uses: montudor/action-zip@v1
         #with:
         #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x *exclude
@@ -133,24 +134,47 @@ jobs:
         with:
           name: ${{env.ARCHIVE_NAME}}-pkgs
           path: ${{env.ARCHIVE_NAME}}-pkgs.zip 
-            
-      - name: release
-        uses: softprops/action-gh-release@v2
-        #if: github.ref_type == 'tag'
+
+      - name: Release
+        uses: ncipollo/release-action@main
         with:
-          tag_name: ${{env.ARCHIVE_NAME}}
-          prerelease: false
-          draft: false
-          generat_release_notes: false
+          token: ${{ secrets.TOKEN }}
+          artifacts: "${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*,PKG-INFO"
+          allowUpdates: true
+          replacesArtifacts: true
+          bodyFile: "PKG-INFO"
+          tag: ${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
+      #- name: release 2
+      #  uses: softprops/action-gh-release@v2
+        #if: github.ref_type == 'tag'
+      #  with:
+       #   tag_name: ${{env.ARCHIVE_NAME}}
+       #   prerelease: false
+       #   draft: false
+       #   generat_release_notes: false
           #name: ${{needs.changelog.output.tag}}
-          files: 
-            ${{env.ARCHIVE_NAME}}-pkgs.zip
-            Packages
-            Packages.*
-            PKG-INFO
+       #   files: 
+       #     ${{env.ARCHIVE_NAME}}-pkgs.zip
+       #     Packages
+       #     Packages.*
+       #     PKG-INFO
+       # env:
+       #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+       
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 9
+          keep_minimum_runs: 0
+    
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-older-releases@master
+        with:
+          keep_latest: 3
+          delete_tags: true
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        
+           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+           
       - name: Store logs
         if: always()
         uses: actions/upload-artifact@v4

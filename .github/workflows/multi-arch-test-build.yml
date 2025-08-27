@@ -121,28 +121,32 @@ jobs:
           ls -al *.ipk >> PKG-INFO || true
           cat PKG-INFO
 
-      #- name: Store packages
-      #  if: always()
-      #  uses: actions/upload-artifact@v5
-      #  with:
-       #   name: ${{env.ARCHIVE_NAME}}-pkgs
-       #   path: |
-       #     Packages
-       #     Packages.*
-       #     *.ipk
-       #     PKG-INFO
+      - name: zip packages
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x |
+            *.ipk
+      - name: upload packages
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{env.ARCHIVE_NAME}}-pkgs
+          path: |
+            ${{env.ARCHIVE_NAME}}-pkgs.zip 
+            
       - name: release
         uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
         with:
-          tag_name: ${{env.ARCHIVE_NAME}}
+          tag_name: ${{github.ref_name}}_${{env.ARCHIVE_NAME}}
           prerelease: false
           draft: false
           generat_release_notes: false
           #name: ${{needs.changelog.output.tag}}
           files: |
+            ${{env.ARCHIVE_NAME}}-pkgs.zip
             Packages
             Packages.*
-            *.ipk
             PKG-INFO
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

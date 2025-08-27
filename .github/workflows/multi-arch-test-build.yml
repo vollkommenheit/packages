@@ -128,7 +128,7 @@ jobs:
             *.ipk
       - name: upload packages
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: ${{env.ARCHIVE_NAME}}-pkgs
           path: |
@@ -153,7 +153,7 @@ jobs:
         
       - name: Store logs
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: ${{env.ARCHIVE_NAME}}-logs
           path: |

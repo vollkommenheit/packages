@@ -138,7 +138,7 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@main
         with:
-          token: ${{ secrets.TOKEN }}
+          token: ${{secrets.GITHUB_TOKEN}}
           artifacts: "${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*,PKG-INFO"
           allowUpdates: true
           replacesArtifacts: true

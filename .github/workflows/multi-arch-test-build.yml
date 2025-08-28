@@ -139,7 +139,7 @@ jobs:
         uses: ncipollo/release-action@main
         with:
           #token: ${{secrets.TOKEN}}
-          artifacts: "${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*"
+          artifacts: "workflo${{ github.run_number }}_${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*"
           allowUpdates: true
           replacesArtifacts: true
           bodyFile: "PKG-INFO"

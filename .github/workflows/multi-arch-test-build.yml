@@ -54,8 +54,8 @@ jobs:
           # fallback to test packages if nothing explicitly changes this is
           # should run if other mechanics in packages.git changed
           #PACKAGES="${PACKAGES:-vim attendedsysupgrade-common bmon}"
-          #PACKAGES="chrony dawn udpxy unbound"
-          PACKAGES="unbound"
+          PACKAGES="chrony dawn udpxy unbound"
+          #PACKAGES="unbound"
 
           echo "Building $PACKAGES"
           echo "PACKAGES=$PACKAGES" >> $GITHUB_ENV
@@ -138,12 +138,12 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@main
         with:
-          #token: ${{secrets.TOKEN}}
-          artifacts: "workflo${{ github.run_number }}_${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*"
+          token: ${{secrets.GITHUB_TOKEN}}
+          artifacts: "${{ github.run_number }}_${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*"
           allowUpdates: true
           replacesArtifacts: true
           bodyFile: "PKG-INFO"
-          tag: workflo${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
+          tag: wkflo${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
       #- name: release 2
       #  uses: softprops/action-gh-release@v2
         #if: github.ref_type == 'tag'
@@ -159,7 +159,7 @@ jobs:
        #     Packages.*
        #     PKG-INFO
        # env:
-       #   GITHUB_TOKEN: ${{secrets.TOKEN}}
+       #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
        
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
@@ -171,7 +171,7 @@ jobs:
         uses: sgpublic/delete-release-action@v1.2
         with:
           release-drop: true
-          release-keep-count: 3
+          release-keep-count: 5
           release-drop-tag: true
           pre-release-drop: true
           pre-release-keep-count: -1

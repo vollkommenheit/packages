@@ -159,7 +159,7 @@ jobs:
        #     Packages.*
        #     PKG-INFO
        # env:
-       #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+       #   GITHUB_TOKEN: ${{secrets.TOKEN}}
        
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
@@ -179,8 +179,7 @@ jobs:
           draft-drop: true
           draft-drop-count: -1
         env:
-        #   GITHUB_TOKEN: ${{ secrets.TOKEN }}
-           GITHUB_TOKEN: 
+           GITHUB_TOKEN: ${{ secrets.TOKEN }}
            
       - name: Store logs
         if: always()

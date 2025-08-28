@@ -178,8 +178,9 @@ jobs:
           pre-release-drop-tag: true
           draft-drop: true
           draft-drop-count: -1
-        #env:
+        env:
         #   GITHUB_TOKEN: ${{ secrets.TOKEN }}
+           GITHUB_TOKEN: 
            
       - name: Store logs
         if: always()

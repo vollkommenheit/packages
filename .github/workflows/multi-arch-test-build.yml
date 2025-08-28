@@ -139,11 +139,11 @@ jobs:
         uses: ncipollo/release-action@main
         with:
           #token: ${{secrets.TOKEN}}
-          artifacts: "${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*,PKG-INFO"
+          artifacts: "${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*"
           allowUpdates: true
           replacesArtifacts: true
           bodyFile: "PKG-INFO"
-          tag: ${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
+          tag: workflo${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
       #- name: release 2
       #  uses: softprops/action-gh-release@v2
         #if: github.ref_type == 'tag'
@@ -168,12 +168,18 @@ jobs:
           keep_minimum_runs: 0
     
       - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@master
+        uses: sgpublic/delete-release-action@v1.2
         with:
-          keep_latest: 3
-          delete_tags: true
-        env:
-           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          release-drop: true
+          release-keep-count: 3
+          release-drop-tag: true
+          pre-release-drop: true
+          pre-release-keep-count: -1
+          pre-release-drop-tag: true
+          draft-drop: true
+          draft-drop-count: -1
+        #env:
+        #   GITHUB_TOKEN: ${{ secrets.TOKEN }}
            
       - name: Store logs
         if: always()

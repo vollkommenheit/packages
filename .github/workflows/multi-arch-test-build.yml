@@ -54,8 +54,8 @@ jobs:
           # fallback to test packages if nothing explicitly changes this is
           # should run if other mechanics in packages.git changed
           #PACKAGES="${PACKAGES:-vim attendedsysupgrade-common bmon}"
-          PACKAGES="chrony dawn udpxy unbound"
-          #PACKAGES="unbound"
+          #PACKAGES="chrony dawn udpxy unbound"
+          PACKAGES="chrony"
 
           echo "Building $PACKAGES"
           echo "PACKAGES=$PACKAGES" >> $GITHUB_ENV

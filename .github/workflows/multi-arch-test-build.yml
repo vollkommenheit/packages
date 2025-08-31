@@ -55,7 +55,7 @@ jobs:
           # should run if other mechanics in packages.git changed
           #PACKAGES="${PACKAGES:-vim attendedsysupgrade-common bmon}"
           #PACKAGES="chrony dawn udpxy unbound"
-          PACKAGES="chrony"
+          PACKAGES="unbound"
 
           echo "Building $PACKAGES"
           echo "PACKAGES=$PACKAGES" >> $GITHUB_ENV

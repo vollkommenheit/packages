@@ -21,7 +21,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/NLnetLabs/unbound.git
-PKG_SOURCE_VERSION:=
+PKG_SOURCE_VERSION:=c57c39833e5fce6c312bc70b329e42dd261fb9fc
 PKG_MIRROR_HASH:=
 
 PKG_MAINTAINER:=Eric Luehrsen <ericluehrsen@gmail.com>

@@ -22,7 +22,16 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/NLnetLabs/unbound.git
 PKG_SOURCE_VERSION:=85e916e7e03920724f158cf47e5eb83324518623
-PKG_MIRROR_HASH:=3501560e3cb606d0fac8fd554e1d49b3ec5fbd2c1b00e8919078545cef5ca22d
+PKG_MIRROR_HASH:=skip
+#IGNORE_PKG_HASH_ISSUE:=
+#https://openwrt.org/docs/guide-developer/packages
+#cmangla/gh-action-sdk@pr-hash-fixup-option
+#https://github.com/openwrt/gh-action-sdk/pull/40
+#https://github.com/openwrt/packages/issues/23656
+https://github.com/openwrt/openwrt/issues/19757
+# auto pkg source version
+#https://github.com/qwerttvv/Router/blob/master/.github/workflows/smartdns.yml
+#https://github.com/pymumu/smartdns/blob/master/package/openwrt/Makefile
 
 PKG_MAINTAINER:=Eric Luehrsen <ericluehrsen@gmail.com>
 PKG_LICENSE:=BSD-3-Clause

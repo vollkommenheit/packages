@@ -1,4 +1,4 @@
-name: Test Build
+name: Build from latest commit
 
 on:
   #pull_request:

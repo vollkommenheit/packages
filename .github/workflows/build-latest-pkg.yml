@@ -90,11 +90,14 @@ jobs:
       - name: Update Makefile
         if: matrix.arch != 'linux_x86_64'
         run: |
-          cd ./net/unbound/
-          #sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$(date +%Y-%m-%d)/" Makefile
-          sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$LASTCOMMITDATE_pkg/" Makefile
-          sed -i "s/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=$SHA_pkg/" Makefile
-          sed -i "s/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=skip/" Makefile
+          #cd ./net/unbound/
+          #sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$(date +%Y-%m-%d)/" ./net/unbound/Makefile
+          sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$LASTCOMMITDATE_PKG/" ./net/unbound/Makefile
+          sed -i "s/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=$SHA_pkg/" ./net/unbound/Makefile
+          sed -i "s/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=skip/" ./net/unbound/Makefile
+          grep PKG_SOURCE_DATE ./net/unbound/Makefile
+          grep PKG_SOURCE_VERSION ./net/unbound/Makefile
+          grep PKG_MIRROR_HASH ./net/unbound/Makefile
 
       - name: Build
         #uses: openwrt/gh-action-sdk@v9

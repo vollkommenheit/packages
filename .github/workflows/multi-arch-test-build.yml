@@ -72,12 +72,15 @@ jobs:
 
       - name: Build
         uses: openwrt/gh-action-sdk@v7
+        #uses: cmangla/gh-action-sdk@pr-hash-fixup-option
         env:
           ARCH: ${{ matrix.arch }}-${{ env.BRANCH }}
           FEEDNAME: packages_ci
           INDEX: 1
           KEY_BUILD: ${{ env.KEY_BUILD }}
           V: s
+          FIXUP: 1
+          #IGNORE_PKG_HASH_ISSUE: 1
 
       - name: Move created packages to project dir
         if: always()
@@ -118,7 +121,7 @@ jobs:
           done
           echo >> PKG-INFO
           echo Full file listing: >> PKG-INFO
-          ls -al *.ipk >> PKG-INFO || true
+          ls -al *.?pk >> PKG-INFO || true
           cat PKG-INFO
 
       - name: zip packages
@@ -139,7 +142,7 @@ jobs:
         uses: ncipollo/release-action@main
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          artifacts: "${{ github.run_number }}_${{env.ARCHIVE_NAME}}-pkgs.zip,*.ipk,Packages,Packages.*"
+          artifacts: "${{ github.run_number }}_${{env.ARCHIVE_NAME}}-pkgs.zip,*.?pk,Packages,Packages.*"
           allowUpdates: true
           replacesArtifacts: true
           bodyFile: "PKG-INFO"

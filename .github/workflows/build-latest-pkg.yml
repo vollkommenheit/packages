@@ -70,7 +70,7 @@ jobs:
           echo "LASTCOMMITDATE_pkg=$LASTCOMMITDATE_pkg" >> $GITHUB_ENV
           echo "$GITHUB_ENV"
           #echo "https://github.com/$OWNER/$PACKAGES/commits/$SHA_pkg" >> "${{ github.workspace }}-nightly_builds_release_notes.txt"
-          find . -iname Makefile
+          find ./net/unbound -iname Makefile
 
       - name: Generate build keys
         run: |
@@ -85,6 +85,7 @@ jobs:
       - name: Update Makefile
         if: matrix.arch != 'linux_x86_64'
         run: |
+          cd ./net/unbound/
           #sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$(date +%Y-%m-%d)/" Makefile
           sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$LASTCOMMITDATE_pkg/" Makefile
           sed -i "s/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=$SHA_pkg/" Makefile

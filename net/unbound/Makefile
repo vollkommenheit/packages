@@ -23,7 +23,6 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/NLnetLabs/unbound.git
 PKG_SOURCE_VERSION:=85e916e7e03920724f158cf47e5eb83324518623
 PKG_MIRROR_HASH:=skip
-#IGNORE_PKG_HASH_ISSUE:=
 #https://openwrt.org/docs/guide-developer/packages
 #cmangla/gh-action-sdk@pr-hash-fixup-option
 #https://github.com/openwrt/gh-action-sdk/pull/40

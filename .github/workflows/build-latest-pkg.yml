@@ -59,6 +59,7 @@ jobs:
 
           echo "Building $PACKAGES"
           echo "PACKAGES=$PACKAGES" >> $GITHUB_ENV
+          echo "OWNER=$OWNER" >> $GITHUB_ENV
 
       - name: Get latest commit SHA for $PACKAGES and Prepare Release Notes
         shell: bash

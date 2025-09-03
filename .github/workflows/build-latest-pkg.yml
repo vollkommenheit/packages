@@ -75,13 +75,14 @@ jobs:
            | grep "sha\":" | head -1 | tr -d "sha"":"","" ""\"" \
           )
           #$SHA_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | jq -r '.sha')
+          #echo "https://github.com/$OWNER/$PACKAGES/commits/$SHA_PKG" >> "${{ github.workspace }}-nightly_builds_release_notes.txt"
+          #find ./net/unbound -iname Makefile
           echo "DATE_PKG $DATE_PKG SHA_PKG $SHA_PKG TPKG $TPKG"
           echo "SHA_PKG=$SHA_PKG" >> $GITHUB_ENV
           echo "DATE_PKG=$DATE_PKG" >> $GITHUB_ENV
+          echo "-----"
           echo "$GITHUB_ENV"
-          #echo "https://github.com/$OWNER/$PACKAGES/commits/$SHA_PKG" >> "${{ github.workspace }}-nightly_builds_release_notes.txt"
-          #find ./net/unbound -iname Makefile
-
+          
       - name: Generate build keys
         run: |
           sudo apt-get update

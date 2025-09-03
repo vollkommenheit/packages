@@ -21,7 +21,6 @@ jobs:
             target: mt7621
             runtime_test: false
 
-
     steps:
       - uses: actions/checkout@v5
         with:
@@ -71,8 +70,9 @@ jobs:
           echo "$EOF" >> $GITHUB_ENV
 
       - name: Build
-        uses: openwrt/gh-action-sdk@v9
+        #uses: openwrt/gh-action-sdk@v9
         #uses: cmangla/gh-action-sdk@pr-hash-fixup-option
+        uses：qwerttvv/Router/@gh-action-sdk
         env:
           ARCH: ${{ matrix.arch }}-${{ env.BRANCH }}
           FEEDNAME: packages_ci
@@ -81,6 +81,7 @@ jobs:
           V: s
           FIXUP: 1
           #IGNORE_PKG_HASH_ISSUE: 1
+          NO_REFRESH_CHECK: true
 
       - name: Move created packages to project dir
         if: always()

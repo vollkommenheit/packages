@@ -64,15 +64,17 @@ jobs:
       - name: Get latest commit SHA for $PACKAGES and Prepare Release Notes
         shell: bash
         run: |
+        curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | tr -d "\"" |grep "date:" | tail -1 | sed "s/\"//g" | awk "{print $2}" | tr -d TZ"\-"":" | rev | cut -c 7- | rev 
           {
             echo "LASTCOMMITDATE_PKG=<<EOF"
-            curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | tr -d "\"" |grep "date:" | tail -1 | sed "s/\"//g" | awk "{print $2}" | tr -d TZ"\-"":" | rev | cut -c 7- | rev 
-            echo "EOF"
+                        echo "EOF"
           } >> "$GITHUB_ENV"
+          echo "SHA_PKG -------------------"
+          curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | grep 'sha\":' | head -1 | tr -d "\"""sha"":"","" "
+
           {
             echo "SHA_PKG=<<EOF"
-            curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | grep 'sha\":' | head -1 | tr -d "\"""sha"":"","" "
-            echo "EOF"
+                        echo "EOF"
           } >> "$GITHUB_ENV"
           
           #LASTCOMMITDATE_PKG=$(curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | tr -d "\"" |grep "date:" | tail -1 | sed "s/\"//g" | awk "{print $2}" | tr -d TZ"\-"":" | rev | cut -c 7- | rev )

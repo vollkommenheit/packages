@@ -64,7 +64,7 @@ jobs:
       - name: Get latest commit SHA for $PACKAGES and Prepare Release Notes
         shell: bash
         run: |
-          LASTCOMMITDATE_PKG=$(curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master \
+          DATE_PKG=$(curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master \
            | tr -d "\"" |grep "date:" | tail -1 | sed "s/\"//g" | awk -F": " '{print $2}' | tr -d TZ":" | rev | cut -c 7- | rev \
           )
           SHA_PKG=$(curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master \
@@ -72,8 +72,9 @@ jobs:
            #| grep "sha\":" | head -1 | tr -d "sha"":"","" ""\"" \
           )
           #$SHA_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | jq -r '.sha')
+          echo "DATE_PKG $DATE_PKG SHA_PKG $SHA_PKG"
           echo "SHA_PKG=$SHA_PKG" >> $GITHUB_ENV
-          echo "LASTCOMMITDATE_PKG=$LASTCOMMITDATE_PKG" >> $GITHUB_ENV
+          echo "DATE_PKG=$DATE_PKG" >> $GITHUB_ENV
           echo "$GITHUB_ENV"
           #echo "https://github.com/$OWNER/$PACKAGES/commits/$SHA_PKG" >> "${{ github.workspace }}-nightly_builds_release_notes.txt"
           #find ./net/unbound -iname Makefile
@@ -93,8 +94,8 @@ jobs:
         run: |
           #cd ./net/unbound/
           #sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$(date +%Y-%m-%d)/" ./net/unbound/Makefile
-          sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$LASTCOMMITDATE_PKG/" ./net/unbound/Makefile
-          sed -i "s/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=$SHA_pkg/" ./net/unbound/Makefile
+          sed -i "s/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=$DATE_PKG/" ./net/unbound/Makefile
+          sed -i "s/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=$SHA_PKG/" ./net/unbound/Makefile
           sed -i "s/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=skip/" ./net/unbound/Makefile
           grep PKG_SOURCE_DATE ./net/unbound/Makefile
           grep PKG_SOURCE_VERSION ./net/unbound/Makefile

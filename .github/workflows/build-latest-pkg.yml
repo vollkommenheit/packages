@@ -61,13 +61,14 @@ jobs:
           echo "PACKAGES=$PACKAGES" >> $GITHUB_ENV
 
       - name: Get latest commit SHA for $PACKAGES and Prepare Release Notes
-        shell: bash
+        shell: pwsh
         run: |
-          $LASTCOMMITDATE_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master |grep "date\":" |tail -1 |sed "s/\"//g" |awk "{print $2}" |tr -d TZ"-"":" |rev |cut -c 7- |rev)
-          $SHA_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master |grep "sha\":" |head -1 |tr -d "\"""sha"":"","" ")
+          $LASTCOMMITDATE_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | grep "date\":" | tail -1 | sed "s/\"//g" | awk "{print $2}" | tr -d TZ"-"":" | rev | cut -c 7- | rev)
+          #$SHA_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | grep "sha\":" | head -1 | tr -d "\"""sha"":"","" ")
+          $SHA_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | jq -r ".sha")
           echo "SHA_pkg=$SHA_pkg" >> $env:GITHUB_ENV
           echo "LASTCOMMITDATE_pkg=$LASTCOMMITDATE_pkg" >> $env:GITHUB_ENV
-          echo "https://github.com/$OWNER/$PACKAGES/commits/$SHA_pkg" >> "${{ github.workspace }}-nightly_builds_release_notes.txt"
+          #echo "https://github.com/$OWNER/$PACKAGES/commits/$SHA_pkg" >> "${{ github.workspace }}-nightly_builds_release_notes.txt"
 
       - name: Generate build keys
         run: |

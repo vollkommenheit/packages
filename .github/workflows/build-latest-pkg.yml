@@ -71,8 +71,11 @@ jobs:
            | jq -r '.sha' \
            #| grep "sha\":" | head -1 | tr -d "sha"":"","" ""\"" \
           )
+          TPKG=$(curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master \
+           | grep "sha\":" | head -1 | tr -d "sha"":"","" ""\"" \
+          )
           #$SHA_pkg = (curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master | jq -r '.sha')
-          echo "DATE_PKG $DATE_PKG SHA_PKG $SHA_PKG"
+          echo "DATE_PKG $DATE_PKG SHA_PKG $SHA_PKG TPKG $TPKG"
           echo "SHA_PKG=$SHA_PKG" >> $GITHUB_ENV
           echo "DATE_PKG=$DATE_PKG" >> $GITHUB_ENV
           echo "$GITHUB_ENV"

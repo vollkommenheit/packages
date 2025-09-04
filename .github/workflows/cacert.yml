@@ -17,17 +17,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get latest commit SHA for $PACKAGES and Prepare Release Notes
+      - name: Get latest CA certs
         run: |
           echo "https://curl.se/docs/caextract.html "
           echo "curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem"
           curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem
-          echo "ARCHIVE_NAME=ca-cert_$(date '+%YYYY-%mm-%d-%H%M%S')" >> $GITHUB_ENV
+          echo "ARCHIVE_NAME=ca-cert_$(date '+%Y-%m-%d-%H%M%S')" >> $GITHUB_ENV
         shell: bash
 
       - name: zip ca cert pem
         run: |
-          zip -j .zip -n ${{env.ARCHIVE_NAME}}*.pem
+          zip -j .zip -n *.pem
         #uses: montudor/action-zip@v1
         #with:
         #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x *exclude

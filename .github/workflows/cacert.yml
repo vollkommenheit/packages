@@ -27,8 +27,7 @@ jobs:
 
       - name: zip ca cert pem
         run: |
-          find . -iname *.pem
-          zip -r ${{env.ARCHIVE_NAME}}.zip -n *.pem
+          find . -iname "*.pem" -print |zip ${{env.ARCHIVE_NAME}}.zip -@
         #uses: montudor/action-zip@v1
         #with:
         #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x *exclude

@@ -62,7 +62,6 @@ jobs:
           echo "OWNER=$OWNER" >> $GITHUB_ENV
 
       - name: Get latest commit SHA for $PACKAGES and Prepare Release Notes
-        shell: bash
         run: |
           DATE_PKG=$(curl -sSL https://api.github.com/repos/$OWNER/$PACKAGES/commits/master \
            |tr -d "\"" |grep "date:" |tail -1 |sed "s/\"//g" |awk -F": " '{print $2}' |tr -d TZ":" |rev |cut -c 7- |rev \
@@ -80,6 +79,7 @@ jobs:
           #echo "DATE_PKG $DATE_PKG SHA_PKG $SHA_PKG TPKG $TPKG"
           echo "SHA_PKG=$SHA_PKG" >> $GITHUB_ENV
           echo "DATE_PKG=$DATE_PKG" >> $GITHUB_ENV
+        shell: bash
           
       - name: Generate build keys
         run: |

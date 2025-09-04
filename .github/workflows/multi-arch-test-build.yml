@@ -175,7 +175,7 @@ jobs:
         uses: sgpublic/delete-release-action@v1.2
         with:
           release-drop: true
-          release-keep-count: 5
+          release-keep-count: 15
           release-drop-tag: true
           pre-release-drop: true
           pre-release-keep-count: -1

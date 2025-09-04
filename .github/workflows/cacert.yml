@@ -22,7 +22,7 @@ jobs:
           echo "https://curl.se/docs/caextract.html "
           echo "curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem"
           curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem
-          echo "ARCHIVE_NAME=ca-cert_$(date '+%Y-%m-%d-%H%M%S')" >> $GITHUB_ENV
+          echo "ARCHIVE_NAME=ca-cert_$(date '+%Y-%m-%d')" >> $GITHUB_ENV
         shell: bash
 
       - name: zip ca cert pem

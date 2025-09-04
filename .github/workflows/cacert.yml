@@ -28,7 +28,7 @@ jobs:
       - name: zip ca cert pem
         run: |
           find . -iname *.pem
-          #zip -j .zip -n *.pem
+          zip -r ${{env.ARCHIVE_NAME}}.zip -n *.pem
         #uses: montudor/action-zip@v1
         #with:
         #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x *exclude
@@ -47,7 +47,7 @@ jobs:
           artifacts: "cac${{ github.run_number }}_${{env.ARCHIVE_NAME}}*.zip,*.pem"
           allowUpdates: true
           replacesArtifacts: true
-          bodyFile: "PKG-INFO"
+          #bodyFile: "PKG-INFO"
           tag: cac${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
       #- name: release 2
       #  uses: softprops/action-gh-release@v2

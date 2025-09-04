@@ -130,7 +130,7 @@ jobs:
           echo "HEAD_ID=$(git rev-parse --short HEAD^2)" >> $GITHUB_ENV
           PRNUMBER=${GITHUB_REF_NAME%/merge}
           echo "PRNUMBER=$PRNUMBER" >> $GITHUB_ENV
-          echo "ARCHIVE_NAME=${{PACKAGES}}-${{matrix.arch}}-$PRNUMBER-$MERGE_ID" >> $GITHUB_ENV
+          echo "ARCHIVE_NAME=${{matrix.arch}}-$PRNUMBER-$MERGE_ID" >> $GITHUB_ENV
 
       - name: Generate metadata
         if: always()

@@ -130,7 +130,7 @@ jobs:
           echo "HEAD_ID=$(git rev-parse --short HEAD^2)" >> $GITHUB_ENV
           PRNUMBER=${GITHUB_REF_NAME%/merge}
           echo "PRNUMBER=$PRNUMBER" >> $GITHUB_ENV
-          echo "ARCHIVE_NAME=${{matrix.arch}}-$PRNUMBER-$MERGE_ID" >> $GITHUB_ENV
+          echo "ARCHIVE_NAME=${{PACKAGES}}-${{matrix.arch}}-$PRNUMBER-$MERGE_ID" >> $GITHUB_ENV
 
       - name: Generate metadata
         if: always()
@@ -177,11 +177,11 @@ jobs:
         uses: ncipollo/release-action@main
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          artifacts: "${{ github.run_number }}_${{env.ARCHIVE_NAME}}-pkgs.zip,*.?pk,Packages,Packages.*"
+          artifacts: "*-pkgs.zip,*.?pk,Packages,Packages.*"
           allowUpdates: true
           replacesArtifacts: true
           bodyFile: "PKG-INFO"
-          tag: wkflo${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
+          tag: blp${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
       #- name: release 2
       #  uses: softprops/action-gh-release@v2
         #if: github.ref_type == 'tag'

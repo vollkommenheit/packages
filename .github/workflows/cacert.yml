@@ -1,0 +1,99 @@
+name: CA certs from Mozilla
+
+on:
+  #pull_request:
+  #push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: CA certs 
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Get latest commit SHA for $PACKAGES and Prepare Release Notes
+        run: |
+          echo "https://curl.se/docs/caextract.html "
+          echo "curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem"
+          curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem
+          echo "ARCHIVE_NAME=ca-cert_$(date '+%YYYY-%mm-%d-%H%M%S')" >> $GITHUB_ENV
+        shell: bash
+
+      - name: zip ca cert pem
+        run: |
+          zip -j .zip -n ${{env.ARCHIVE_NAME}}*.pem
+        #uses: montudor/action-zip@v1
+        #with:
+        #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x *exclude
+          
+      - name: upload packages
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.ARCHIVE_NAME}}
+          path: ${{env.ARCHIVE_NAME}}.pem 
+
+      - name: Release
+        uses: ncipollo/release-action@main
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          artifacts: "cac${{ github.run_number }}_${{env.ARCHIVE_NAME}}*.zip,*.pem"
+          allowUpdates: true
+          replacesArtifacts: true
+          bodyFile: "PKG-INFO"
+          tag: cac${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
+      #- name: release 2
+      #  uses: softprops/action-gh-release@v2
+        #if: github.ref_type == 'tag'
+      #  with:
+       #   tag_name: ${{env.ARCHIVE_NAME}}
+       #   prerelease: false
+       #   draft: false
+       #   generat_release_notes: false
+          #name: ${{needs.changelog.output.tag}}
+       #   files: 
+       #     ${{env.ARCHIVE_NAME}}-pkgs.zip
+       #     Packages
+       #     Packages.*
+       #     PKG-INFO
+       # env:
+       #   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+       
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 9
+          keep_minimum_runs: 0
+    
+      - name: Remove old Releases
+        uses: sgpublic/delete-release-action@v1.2
+        with:
+          release-drop: true
+          release-keep-count: 5
+          release-drop-tag: true
+          pre-release-drop: true
+          pre-release-keep-count: -1
+          pre-release-drop-tag: true
+          draft-drop: true
+          draft-drop-count: -1
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           
+      - name: Store logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.ARCHIVE_NAME}}-logs
+          path: |
+            logs/
+            PKG-INFO
+
+      - name: Remove logs
+        if: always()
+        run: sudo rm -rf logs/ || true

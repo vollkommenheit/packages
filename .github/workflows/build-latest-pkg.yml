@@ -161,7 +161,7 @@ jobs:
 
       - name: zip packages
         run: |
-          zip -r ${{env.ARCHIVE_NAME}}-pkgs.zip -n *.?pk
+          zip -j ${{env.ARCHIVE_NAME}}-pkgs.zip -n *.?pk
         #uses: montudor/action-zip@v1
         #with:
         #  args: zip -X -r ${{env.ARCHIVE_NAME}}-pkgs.zip . -x *exclude

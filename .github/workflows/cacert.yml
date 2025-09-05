@@ -23,6 +23,7 @@ jobs:
           echo "curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem"
           curl --etag-compare etag.txt --etag-save etag.txt --remote-name https://curl.se/ca/cacert.pem
           echo "ARCHIVE_NAME=ca-cert_$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+          find . -iname etag.txt
         shell: bash
 
       - name: zip ca cert pem
@@ -46,7 +47,7 @@ jobs:
           artifacts: "cac${{ github.run_number }}_${{env.ARCHIVE_NAME}}*.zip,*.pem"
           allowUpdates: true
           replacesArtifacts: true
-          #bodyFile: "PKG-INFO"
+          bodyFile: "etag.txt"
           tag: cac${{ github.run_number }}_${{env.ARCHIVE_NAME}}         
       #- name: release 2
       #  uses: softprops/action-gh-release@v2

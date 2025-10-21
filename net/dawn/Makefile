@@ -11,7 +11,7 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/berlin-open-wireless-lab/DAWN.git
 PKG_SOURCE_VERSION:=3b220fb92d3ab95b337d7375ab545ff5f1ffcf92
-PKG_MIRROR_HASH:=22cea74557097eeb9d094cb699f0d784d83c7dd04122f78e11eaaecb972b5bfc
+PKG_MIRROR_HASH:=skip
 
 PKG_MAINTAINER:=Nick Hainke <vincent@systemli.org>
 PKG_LICENSE:=GPL-2.0-only

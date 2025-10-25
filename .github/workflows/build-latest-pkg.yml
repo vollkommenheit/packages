@@ -54,9 +54,9 @@ jobs:
           # should run if other mechanics in packages.git changed
           #PACKAGES="${PACKAGES:-vim attendedsysupgrade-common bmon}"
           #PACKAGES="chrony dawn udpxy unbound"
-          PACKAGES="dawn"
-          #OWNER="NLnetLabs"
-          OWNER="berlin-open-wireless-lab"
+          PACKAGES="unbound"
+          OWNER="NLnetLabs"
+          #OWNER="berlin-open-wireless-lab"
 
           echo "Building $PACKAGES"
           echo "PACKAGES=$PACKAGES" >> $GITHUB_ENV

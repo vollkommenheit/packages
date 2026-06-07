@@ -54,8 +54,8 @@ jobs:
           # should run if other mechanics in packages.git changed
           #PACKAGES="${PACKAGES:-vim attendedsysupgrade-common bmon}"
           #PACKAGES="chrony dawn udpxy unbound"
-          PACKAGES="unbound"
-          #OWNER="dawn"
+          PACKAGES="dawn"
+          #OWNER="NLnetLabs"
           OWNER="berlin-open-wireless-lab"
           #OWNER="pcherenkov"
 

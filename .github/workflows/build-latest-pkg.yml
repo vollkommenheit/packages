@@ -55,8 +55,8 @@ jobs:
           #PACKAGES="${PACKAGES:-vim attendedsysupgrade-common bmon}"
           #PACKAGES="chrony dawn udpxy unbound"
           PACKAGES="unbound"
-          OWNER="NLnetLabs"
-          #OWNER="berlin-open-wireless-lab"
+          #OWNER="dawn"
+          OWNER="berlin-open-wireless-lab"
           #OWNER="pcherenkov"
 
           echo "Building $PACKAGES"

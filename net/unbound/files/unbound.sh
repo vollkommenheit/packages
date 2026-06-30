@@ -254,7 +254,8 @@ unbound_mkdir() {
   touch $UB_TOTAL_CONF
   cp -p $UB_ETCDIR/*.conf $UB_VARDIR/
   cp -p $UB_ETCDIR/root.* $UB_VARDIR/
-
+  cp -p $UB_ETCDIR/*.conf $UB_VARDIR/
+  cp -p $UB_ETCDIR/root.* $UB_VARDIR/
 
   if [ ! -f $UB_RHINT_FILE ] ; then
     if [ -f /usr/share/dns/root.hints ] ; then
